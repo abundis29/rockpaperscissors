@@ -6,103 +6,106 @@ var cpuScore = 0;
 var playerScore = 0;
 
 options.forEach((element, id) => {
-    var li = document.createElement("li");
-    var img = document.createElement("img");
-    img.src = "./assets/hand" + element + ".png";
-    img.id = id;
-    li.appendChild(img);
-    img.addEventListener("click", playGame);
-    player.append(li);
+  var li = document.createElement("li");
+  var img = document.createElement("img");
+  img.src = "./assets/hand" + element + ".png";
+  img.id = id;
+  li.appendChild(img);
+  img.addEventListener("click", playGame);
+  player.append(li);
 });
 
 options.forEach(element => {
-    var li = document.createElement("li");
-    var img = document.createElement("img");
-    img.src = "./assets/hand" + element + ".png";
-    li.appendChild(img);
-    cpu.append(li);
+  var li = document.createElement("li");
+  var img = document.createElement("img");
+  img.src = "./assets/hand" + element + ".png";
+  li.appendChild(img);
+  cpu.append(li);
 });
 
 function playGame(event) {
-    var playerInput = simbols[event.target.id];
-    var random = getRandomOutput();
-    var cpuOutput = simbols[random];
+  var playerInput = simbols[event.target.id];
+  var random = getRandomOutput();
+  var cpuOutput = simbols[random];
 
-    if (playerInput === "rock") {
-        if (cpuOutput == "rock") {
-            presentBet(event.target.id, random, "empate", "empate");
-        } else if (cpuOutput == "paper") {
-            presentBet(event.target.id, random, "Pierde", "Gana");
-            cpuScore++;
-        } else if (cpuOutput == "scissors") {
-            presentBet(event.target.id, random, "Gana", "Pierde");
-            playerScore++;
-        }
-    } else if (playerInput == "paper") {
-        if (cpuOutput == "rock") {
-            presentBet(event.target.id, random, "Gana", "Pierde");
-            playerScore++;
-        } else if (cpuOutput == "paper") {
-            presentBet(event.target.id, random, "empate", "empate");
-        } else if (cpuOutput == "scissors") {
-            presentBet(event.target.id, random, "Pierde", "Gana");
-            cpuScore++;
-        }
-    } else if (playerInput == "scissors") {
-        if (cpuOutput == "rock") {
-            presentBet(event.target.id, random, "Pierde", "Gana");
-            cpuScore++;
-        } else if (cpuOutput == "paper") {
-            presentBet(event.target.id, random, "Gana", "Pierde");
-            playerScore++;
-        } else if (cpuOutput == "scissors") {
-            presentBet(event.target.id, random, "empate", "empate");
-        }
+  if (playerInput === "rock") {
+    if (cpuOutput == "rock") {
+      presentBet(event.target.id, random, "empate", "empate");
+    } else if (cpuOutput == "paper") {
+      presentBet(event.target.id, random, "Pierde", "Gana");
+      cpuScore++;
+    } else if (cpuOutput == "scissors") {
+      presentBet(event.target.id, random, "Gana", "Pierde");
+      playerScore++;
     }
-    document.getElementById("playerScore").innerHTML = playerScore;
-    document.getElementById("cpuScore").innerHTML = cpuScore;
+  } else if (playerInput == "paper") {
+    if (cpuOutput == "rock") {
+      presentBet(event.target.id, random, "Gana", "Pierde");
+      playerScore++;
+    } else if (cpuOutput == "paper") {
+      presentBet(event.target.id, random, "empate", "empate");
+    } else if (cpuOutput == "scissors") {
+      presentBet(event.target.id, random, "Pierde", "Gana");
+      cpuScore++;
+    }
+  } else if (playerInput == "scissors") {
+    if (cpuOutput == "rock") {
+      presentBet(event.target.id, random, "Pierde", "Gana");
+      cpuScore++;
+    } else if (cpuOutput == "paper") {
+      presentBet(event.target.id, random, "Gana", "Pierde");
+      playerScore++;
+    } else if (cpuOutput == "scissors") {
+      presentBet(event.target.id, random, "empate", "empate");
+    }
+  }
+  document.getElementById("playerScore").innerHTML = playerScore;
+  document.getElementById("cpuScore").innerHTML = cpuScore;
 }
 
 function getRandomOutput() {
-    var play = options[Math.floor(Math.random() * options.length)];
-    return play;
+  var play = options[Math.floor(Math.random() * options.length)];
+  return play;
 }
 
 function presentBet(playerInput, random, result, cpuResult) {
-    var img = document.createElement("img");
-    img.src = "./assets/hand" + playerInput + ".png";
-    var status = document.getElementById("status");
-    status.innerHTML = "";
-    var div = document.createElement("div");
-    var text = document.createTextNode(result);
-    div.append(img);
-    div.append(text);
-    status.append(div);
+  var img = document.createElement("img");
+  var imgCpu = document.createElement("img");
+  var status = document.getElementById("status");
+  var cpuStatus = document.getElementById("cpuStatus");
+  var div = document.createElement("div");
+  var divCpu = document.createElement("div");
+  var text = document.createTextNode(result);
+  var textCpu = document.createTextNode(cpuResult);
 
-    var imgCpu = document.createElement("img");
-    imgCpu.src = "./assets/hand" + random + ".png";
-    var cpuStatus = document.getElementById("cpuStatus");
-    cpuStatus.innerHTML = "";
-    var divCpu = document.createElement("div");
-    var textCpu = document.createTextNode(cpuResult);
-    divCpu.append(imgCpu);
-    divCpu.append(textCpu);
-    cpuStatus.append(divCpu);
+  var temporal_modal = document.getElementById("temporal_modal");
+  var temporal_modal__text = document.createElement("h3");
 
-    var temporal_modal = document.getElementById("temporal_modal");
-    var temporal_modal__text = document.createElement('h3')
-    temporal_modal__text.append(result)
-    temporal_modal.innerHTML = ''
-    temporal_modal.append(temporal_modal__text)
+  img.src = "./assets/hand" + playerInput + ".png";
+  status.innerHTML = "";
+  div.append(img);
+  div.append(text);
+  status.append(div);
 
-    cpuStatus.style.display = "block";
-    status.style.display = "block";
+  imgCpu.src = "./assets/hand" + random + ".png";
+  cpuStatus.innerHTML = "";
+
+  divCpu.append(imgCpu);
+  divCpu.append(textCpu);
+  cpuStatus.append(divCpu);
+
+  temporal_modal__text.append(result);
+  temporal_modal.innerHTML = "";
+  temporal_modal.append(temporal_modal__text);
+
+  cpuStatus.style.display = "block";
+  status.style.display = "block";
+  setTimeout(function() {
+    cpuStatus.style.display = "none";
+    status.style.display = "none";
+    temporal_modal.style.display = "block";
     setTimeout(function() {
-        cpuStatus.style.display = "none";
-        status.style.display = "none";
-        temporal_modal.style.display = "block";
-        setTimeout(function() {
-            temporal_modal.style.display = "none";
-        }, 1000);
+      temporal_modal.style.display = "none";
     }, 1000);
+  }, 1000);
 }
