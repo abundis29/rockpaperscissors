@@ -24,6 +24,11 @@ options.forEach(element => {
 });
 
 function playGame(event) {
+  // prevent
+  document.getElementById("status").style.display = "none";
+  document.getElementById("cpuStatus").style.display = "none";
+  document.getElementById("temporal_modal").style.display = "none";
+
   var playerInput = simbols[event.target.id];
   var random = getRandomOutput();
   var cpuOutput = simbols[random];
