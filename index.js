@@ -33,7 +33,8 @@ function playGame(event) {
   var random = getRandomOutput();
   var cpuOutput = simbols[random];
 
-  switch (playerInput, cpuOutput) {
+  switch (playerInput) {
+
     case "rock":
       if (cpuOutput == "rock") {
         presentBet(event.target.id, random, "empate", "empate");
