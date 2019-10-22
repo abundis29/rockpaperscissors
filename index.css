@@ -1,0 +1,77 @@
+.temporal_modal h3 {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.temporal_modal {
+  position: absolute;
+  right: 0;
+  left: 0;
+  width: 311px;
+  height: 580px;
+  background-color: white;
+  z-index: 1;
+  text-align: center;
+  font-size: 40px;
+  margin: auto;
+}
+[hidden] {
+  display: none;
+}
+span {
+  font-size: 38px;
+}
+img {
+  vertical-align: middle;
+}
+.container {
+  position: relative;
+  width: 100%;
+}
+.full {
+  width: 100%;
+}
+.centered {
+  text-align: center;
+}
+
+.half {
+  display: block;
+  float: left;
+  width: 50%;
+  position: relative;
+}
+.border {
+  border-right: 1px solid black;
+  width: calc(50% - 1px);
+}
+.half:first-of-type {
+  border-right: 1px solid black;
+  min-height: 200px;
+}
+ul {
+  list-style-type: none;
+}
+#status {
+  position: absolute;
+  right: 1px;
+  top: 42%;
+}
+#status div {
+  float: left;
+  display: inline-grid;
+}
+#cpuStatus div {
+  float: left;
+  display: inline-grid;
+}
+#cpuStatus {
+  position: absolute;
+  left: 1px;
+  top: 42%;
+}
+#cpuScore,
+#playerScore {
+  font-size: 69px;
+}
