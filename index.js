@@ -33,37 +33,45 @@ function playGame(event) {
   var random = getRandomOutput();
   var cpuOutput = simbols[random];
 
-  if (playerInput === "rock") {
-    if (cpuOutput == "rock") {
-      presentBet(event.target.id, random, "empate", "empate");
-    } else if (cpuOutput == "paper") {
-      presentBet(event.target.id, random, "Pierde", "Gana");
-      cpuScore++;
-    } else if (cpuOutput == "scissors") {
-      presentBet(event.target.id, random, "Gana", "Pierde");
-      playerScore++;
-    }
-  } else if (playerInput == "paper") {
-    if (cpuOutput == "rock") {
-      presentBet(event.target.id, random, "Gana", "Pierde");
-      playerScore++;
-    } else if (cpuOutput == "paper") {
-      presentBet(event.target.id, random, "empate", "empate");
-    } else if (cpuOutput == "scissors") {
-      presentBet(event.target.id, random, "Pierde", "Gana");
-      cpuScore++;
-    }
-  } else if (playerInput == "scissors") {
-    if (cpuOutput == "rock") {
-      presentBet(event.target.id, random, "Pierde", "Gana");
-      cpuScore++;
-    } else if (cpuOutput == "paper") {
-      presentBet(event.target.id, random, "Gana", "Pierde");
-      playerScore++;
-    } else if (cpuOutput == "scissors") {
-      presentBet(event.target.id, random, "empate", "empate");
-    }
+  switch (playerInput, cpuOutput) {
+    case "rock":
+      if (cpuOutput == "rock") {
+        presentBet(event.target.id, random, "empate", "empate");
+      } else if (cpuOutput == "paper") {
+        presentBet(event.target.id, random, "Pierde", "Gana");
+        cpuScore++;
+      } else if (cpuOutput == "scissors") {
+        presentBet(event.target.id, random, "Gana", "Pierde");
+        playerScore++;
+      }
+      break;
+    case "scissors":
+      if (cpuOutput == "rock") {
+        presentBet(event.target.id, random, "Gana", "Pierde");
+        playerScore++;
+      } else if (cpuOutput == "paper") {
+        presentBet(event.target.id, random, "empate", "empate");
+      } else if (cpuOutput == "scissors") {
+        presentBet(event.target.id, random, "Pierde", "Gana");
+        cpuScore++;
+      }
+      break;
+    case "paper":
+      if (cpuOutput == "rock") {
+        presentBet(event.target.id, random, "Pierde", "Gana");
+        cpuScore++;
+      } else if (cpuOutput == "paper") {
+        presentBet(event.target.id, random, "Gana", "Pierde");
+        playerScore++;
+      } else if (cpuOutput == "scissors") {
+        presentBet(event.target.id, random, "empate", "empate");
+      }
+      break;
+
+    default:
+      break;
   }
+
   document.getElementById("playerScore").innerHTML = playerScore;
   document.getElementById("cpuScore").innerHTML = cpuScore;
 }
