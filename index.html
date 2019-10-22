@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="full centered "><h1>Piedra,Papel o Tijeras</h1></div>
+      <div id="score" class="full centered  score">
+        <span id="playerScore">0</span> <span>-</span>
+        <span id="cpuScore">0</span> <br />
+        marcador
+      </div>
+      <div id="temporal_modal" class="temporal_modal" hidden></div>
+      <div class="half centered border">
+        <div>Tu</div>
+        <br />
+        <div>Selecciona una opción</div>
+        <ul id="player_selection" class="player_selection"></ul>
+        <div id="status" hidden></div>
+      </div>
+      <div class="half centered ">
+        <div>Computadora</div>
+        <ul id="cpu_selection" class="cpu_selection"></ul>
+        <div id="cpuStatus" hidden></div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  var player = document.getElementById("player_selection");
+  var cpu = document.getElementById("cpu_selection");
+  var options = [0, 1, 2];
+  var simbols = ["rock", "paper", "scissors"];
+  var cpuScore = 0;
+  var playerScore = 0;
+
+  options.forEach((element, id) => {
+    var li = document.createElement("li");
+    var img = document.createElement("img");
+    img.src = "./assets/hand" + element + ".png";
+    img.id = id;
+    li.appendChild(img);
+    img.addEventListener("click", playGame);
+    player.append(li);
+  });
+
+  options.forEach(element => {
+    var li = document.createElement("li");
+    var img = document.createElement("img");
+    img.src = "./assets/hand" + element + ".png";
+    li.appendChild(img);
+    cpu.append(li);
+  });
+
+  function playGame(event) {
+    var playerInput = simbols[event.target.id];
+    var random = getRandomOutput();
+    var cpuOutput = simbols[random];
+
+    console.log(cpuOutput, playerInput);
+
+    if (playerInput === "rock") {
+      if (cpuOutput == "rock") {
+        presentBet(event.target.id, random, "empate", "empate");
+      } else if (cpuOutput == "paper") {
+        presentBet(event.target.id, random, "Pierde", "Gana");
+        cpuScore++;
+      } else if (cpuOutput == "scissors") {
+        presentBet(event.target.id, random, "Gana", "Pierde");
+        playerScore++;
+      }
+    } else if (playerInput == "paper") {
+      if (cpuOutput == "rock") {
+        presentBet(event.target.id, random, "Gana", "Pierde");
+        playerScore++;
+      } else if (cpuOutput == "paper") {
+        presentBet(event.target.id, random, "empate", "empate");
+      } else if (cpuOutput == "scissors") {
+        presentBet(event.target.id, random, "Pierde", "Gana");
+        cpuScore++;
+      }
+    } else if (playerInput == "scissors") {
+      if (cpuOutput == "rock") {
+        presentBet(event.target.id, random, "Pierde", "Gana");
+        cpuScore++;
+      } else if (cpuOutput == "paper") {
+        presentBet(event.target.id, random, "Gana", "Pierde");
+        playerScore++;
+      } else if (cpuOutput == "scissors") {
+        presentBet(event.target.id, random, "empate", "empate");
+      }
+    }
+    console.log(playerScore, cpuScore);
+
+    document.getElementById("playerScore").innerHTML = playerScore;
+    document.getElementById("cpuScore").innerHTML = cpuScore;
+  }
+
+  function getRandomOutput() {
+    var play = options[Math.floor(Math.random() * options.length)];
+    return play;
+  }
+
+  function presentBet(playerInput, random, result, cpuResult) {
+    var img = document.createElement("img");
+    img.src = "./assets/hand" + playerInput + ".png";
+    var status = document.getElementById("status");
+    status.innerHTML = "";
+    var div = document.createElement("div");
+    var text = document.createTextNode(result);
+    div.append(img);
+    div.append(text);
+    status.append(div);
+
+    var imgCpu = document.createElement("img");
+    imgCpu.src = "./assets/hand" + random + ".png";
+    var cpuStatus = document.getElementById("cpuStatus");
+    cpuStatus.innerHTML = "";
+    var divCpu = document.createElement("div");
+    var textCpu = document.createTextNode(cpuResult);
+    divCpu.append(imgCpu);
+    divCpu.append(textCpu);
+    cpuStatus.append(divCpu);
+
+    var temporal_modal = document.getElementById("temporal_modal");
+    var temporal_modal__text = document.createElement('h3')
+        temporal_modal__text.append(result)
+        temporal_modal.innerHTML = ''
+        temporal_modal.append(temporal_modal__text)
+
+    cpuStatus.style.display = "block";
+    status.style.display = "block";
+    setTimeout(function() {
+      cpuStatus.style.display = "none";
+      status.style.display = "none";
+      temporal_modal.style.display = "block";
+      setTimeout(function() {
+        temporal_modal.style.display = "none";
+      }, 1000);
+    }, 1000);
+  }
+</script>
+
+<style>
+  .temporal_modal h3{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .temporal_modal {
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: 311px;
+    height: 580px;
+    background-color: white;
+    z-index: 1;
+    text-align: center;
+    font-size: 40px;
+    margin: auto;
+  }
+  [hidden] {
+    display: none;
+  }
+  span {
+    font-size: 38px;
+  }
+  img {
+    vertical-align: middle;
+  }
+  .container {
+    position: relative;
+    width: 100%;
+  }
+  .full {
+    width: 100%;
+  }
+  .centered {
+    text-align: center;
+  }
+
+  .half {
+    display: block;
+    float: left;
+    width: 50%;
+    position: relative;
+  }
+  .border {
+    border-right: 1px solid black;
+    width: calc(50% - 1px);
+  }
+  .half:first-of-type {
+    border-right: 1px solid black;
+    min-height: 200px;
+  }
+  ul {
+    list-style-type: none;
+  }
+  #status {
+    position: absolute;
+    right: 1px;
+    top: 42%;
+  }
+  #status div {
+    float: left;
+    display: inline-grid;
+  }
+  #cpuStatus div {
+    float: left;
+    display: inline-grid;
+  }
+  #cpuStatus {
+    position: absolute;
+    left: 1px;
+    top: 42%;
+  }
+  #cpuScore,
+  #playerScore {
+    font-size: 69px;
+  }
+</style>
